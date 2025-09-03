@@ -1,15 +1,25 @@
 /* Custom CSS for Elegance Boutique */
 
 :root {
-    /* Uptownie-inspired modern color palette */
+    /* Kerala-inspired vibrant color palette */
     --primary-color: #ff6b9d;
     --primary-dark: #e55a87;
     --secondary-color: #c44569;
     --accent-color: #f8b500;
+    --kerala-gold: #ffd700;
+    --kerala-red: #dc3545;
+    --kerala-green: #28a745;
+    --kerala-blue: #007bff;
+    --kerala-orange: #fd7e14;
+    --kerala-purple: #6f42c1;
     --soft-pink: #fff5f8;
     --warm-beige: #faf9f7;
     --sage-green: #e8f5e8;
     --dusty-rose: #f5e6e8;
+    --vibrant-yellow: #ffeb3b;
+    --royal-purple: #9c27b0;
+    --emerald-green: #4caf50;
+    --sunset-orange: #ff9800;
     --dark-color: #1a1a1a;
     --light-color: #ffffff;
     --text-color: #2c2c2c;
@@ -23,6 +33,9 @@
     --shadow-soft: 0 4px 20px rgba(255, 107, 157, 0.1);
     --gradient-primary: linear-gradient(135deg, #ff6b9d, #c44569);
     --gradient-secondary: linear-gradient(135deg, #f8b500, #ff6b9d);
+    --gradient-kerala: linear-gradient(135deg, #ffd700, #ff9800, #e91e63);
+    --gradient-bridal: linear-gradient(135deg, #dc3545, #9c27b0, #ffd700);
+    --gradient-festive: linear-gradient(135deg, #4caf50, #ffeb3b, #ff9800);
     --gradient-soft: linear-gradient(135deg, #fff5f8, #faf9f7);
 }
 
@@ -626,6 +639,207 @@ h1, h2, h3, h4, h5, h6 {
         width: 300px;
         height: 300px;
     }
+}
+
+/* Kerala Wedding Collection Styles */
+.kerala-collection {
+    background: var(--gradient-kerala);
+    color: white;
+    padding: 4rem 0;
+    position: relative;
+    overflow: hidden;
+}
+
+.kerala-collection::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: url('https://images.unsplash.com/photo-1583391733956-6c78276477e1?w=1920&h=1080&fit=crop&auto=format&q=80&opacity=0.1') center/cover;
+    opacity: 0.1;
+    z-index: 1;
+}
+
+.kerala-collection .container {
+    position: relative;
+    z-index: 2;
+}
+
+.kerala-collection h2 {
+    color: white;
+    text-shadow: 2px 2px 8px rgba(0, 0, 0, 0.5);
+    font-size: 3rem;
+    margin-bottom: 1rem;
+}
+
+.kerala-collection p {
+    color: rgba(255, 255, 255, 0.9);
+    text-shadow: 1px 1px 4px rgba(0, 0, 0, 0.5);
+    font-size: 1.2rem;
+}
+
+/* Colorful Category Cards */
+.category-card {
+    position: relative;
+    border-radius: 20px;
+    overflow: hidden;
+    transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
+}
+
+.category-card:hover {
+    transform: translateY(-10px) scale(1.03);
+    box-shadow: 0 20px 60px rgba(0, 0, 0, 0.15);
+}
+
+.category-card.kerala-bridal {
+    background: var(--gradient-bridal);
+}
+
+.category-card.kerala-wedding {
+    background: var(--gradient-kerala);
+}
+
+.category-card.kerala-festive {
+    background: var(--gradient-festive);
+}
+
+.category-card .card-body {
+    background: linear-gradient(135deg, rgba(255, 255, 255, 0.9) 0%, rgba(248, 249, 250, 0.8) 100%);
+    backdrop-filter: blur(10px);
+}
+
+.category-card .card-title {
+    background: var(--gradient-kerala);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    font-weight: 700;
+    font-size: 1.3rem;
+}
+
+/* Vibrant Product Cards */
+.product-card-kerala {
+    border-radius: 20px;
+    overflow: hidden;
+    position: relative;
+    background: linear-gradient(135deg, rgba(255, 255, 255, 0.95) 0%, rgba(248, 249, 250, 0.9) 100%);
+    backdrop-filter: blur(20px);
+    border: 1px solid rgba(255, 215, 0, 0.2);
+    box-shadow: 
+        0 8px 32px rgba(0, 0, 0, 0.1),
+        0 2px 8px rgba(255, 215, 0, 0.1);
+    transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.product-card-kerala:hover {
+    transform: translateY(-8px) scale(1.02);
+    box-shadow: 
+        0 20px 60px rgba(0, 0, 0, 0.15),
+        0 8px 20px rgba(255, 215, 0, 0.3);
+    background: linear-gradient(135deg, rgba(255, 255, 255, 0.98) 0%, rgba(255, 215, 0, 0.1) 100%);
+}
+
+.product-card-kerala::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: var(--gradient-kerala);
+    opacity: 0;
+    transition: opacity 0.3s ease;
+    z-index: 1;
+}
+
+.product-card-kerala:hover::before {
+    opacity: 0.05;
+}
+
+.product-card-kerala .card-body {
+    position: relative;
+    z-index: 2;
+    background: transparent;
+}
+
+.product-card-kerala .card-title {
+    background: var(--gradient-bridal);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    font-weight: 700;
+}
+
+.product-card-kerala .price {
+    color: var(--kerala-gold);
+    font-weight: 800;
+    font-size: 1.3rem;
+    text-shadow: 0 2px 4px rgba(255, 215, 0, 0.2);
+}
+
+/* Kerala-style buttons */
+.btn-kerala {
+    background: var(--gradient-kerala);
+    border: none;
+    color: white;
+    font-weight: 600;
+    padding: 0.75rem 1.5rem;
+    border-radius: 12px;
+    transition: all 0.3s ease;
+    position: relative;
+    overflow: hidden;
+}
+
+.btn-kerala::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: -100%;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.3), transparent);
+    transition: left 0.6s ease;
+}
+
+.btn-kerala:hover::before {
+    left: 100%;
+}
+
+.btn-kerala:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 8px 25px rgba(255, 215, 0, 0.4);
+    background: var(--gradient-bridal);
+}
+
+/* Colorful badges */
+.badge-kerala {
+    background: var(--gradient-kerala);
+    color: white;
+    font-weight: 600;
+    padding: 0.5rem 1rem;
+    border-radius: 20px;
+    font-size: 0.8rem;
+}
+
+.badge-bridal {
+    background: var(--gradient-bridal);
+    color: white;
+    font-weight: 600;
+    padding: 0.5rem 1rem;
+    border-radius: 20px;
+    font-size: 0.8rem;
+}
+
+.badge-festive {
+    background: var(--gradient-festive);
+    color: white;
+    font-weight: 600;
+    padding: 0.5rem 1rem;
+    border-radius: 20px;
+    font-size: 0.8rem;
 }
 
 .elegant-script {

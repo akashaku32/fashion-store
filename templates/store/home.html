@@ -635,6 +635,107 @@
     </div>
 </section>
 
+<!-- Kerala Wedding Collection Section -->
+<section class="kerala-collection mobile-section">
+    <div class="container text-center">
+        <h2 class="feminine-title mb-4">Kerala Bridal & Wedding Collection</h2>
+        <p class="mb-5">Discover the timeless beauty of Kerala's traditional wedding attire - from exquisite Kanchipuram sarees to stunning temple jewelry</p>
+        
+        <div class="row g-4 mb-5">
+            <!-- Kerala Bridal Sarees -->
+            <div class="col-md-4">
+                <div class="category-card kerala-bridal h-100">
+                    <img src="https://images.unsplash.com/photo-1583391733956-6c78276477e1?w=400&h=250&fit=crop&auto=format&q=80" 
+                         class="card-img-top" alt="Kerala Bridal Sarees" style="height: 200px; object-fit: cover;">
+                    <div class="card-body">
+                        <h5 class="card-title">Kerala Bridal Sarees</h5>
+                        <p class="card-text">Traditional Kanchipuram and Kasavu sarees with gold borders</p>
+                        <a href="{% url 'store:product_list' %}?category=kerala-bridal-sarees" class="btn btn-kerala">
+                            <i class="fas fa-sparkles me-2"></i>Shop Now
+                        </a>
+                        <span class="badge badge-bridal mt-2">New Collection</span>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Wedding Lehengas -->
+            <div class="col-md-4">
+                <div class="category-card kerala-wedding h-100">
+                    <img src="https://images.unsplash.com/photo-1594736797933-d0401ba2fe65?w=400&h=250&fit=crop&auto=format&q=80" 
+                         class="card-img-top" alt="Wedding Lehengas" style="height: 200px; object-fit: cover;">
+                    <div class="card-body">
+                        <h5 class="card-title">Bridal Lehengas</h5>
+                        <p class="card-text">Royal velvet and silk lehengas with traditional embroidery</p>
+                        <a href="{% url 'store:product_list' %}?category=wedding-lehengas" class="btn btn-kerala">
+                            <i class="fas fa-crown me-2"></i>Explore
+                        </a>
+                        <span class="badge badge-kerala mt-2">Premium</span>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Traditional Jewelry -->
+            <div class="col-md-4">
+                <div class="category-card kerala-festive h-100">
+                    <img src="https://images.unsplash.com/photo-1515562141207-7a88fb7ce338?w=400&h=250&fit=crop&auto=format&q=80" 
+                         class="card-img-top" alt="Kerala Jewelry" style="height: 200px; object-fit: cover;">
+                    <div class="card-body">
+                        <h5 class="card-title">Temple Jewelry</h5>
+                        <p class="card-text">Authentic Kerala temple jewelry and antique gold designs</p>
+                        <a href="{% url 'store:product_list' %}?category=kerala-traditional-jewelry" class="btn btn-kerala">
+                            <i class="fas fa-gem me-2"></i>Discover
+                        </a>
+                        <span class="badge badge-festive mt-2">Handcrafted</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Featured Kerala Products -->
+        <div class="row g-4">
+            <div class="col-md-6">
+                <div class="product-card-kerala h-100">
+                    <img src="https://images.unsplash.com/photo-1583391733956-6c78276477e1?w=400&h=300&fit=crop&auto=format&q=80" 
+                         class="card-img-top" alt="Kanchipuram Bridal Saree" style="height: 250px; object-fit: cover;">
+                    <div class="card-body">
+                        <h5 class="card-title">Kanchipuram Bridal Saree - Royal Gold</h5>
+                        <p class="card-text">Exquisite silk saree with heavy gold zari work and temple border</p>
+                        <div class="d-flex justify-content-between align-items-center">
+                            <div class="price">₹38,999 <small class="text-muted text-decoration-line-through">₹45,999</small></div>
+                            <button class="btn btn-kerala btn-sm add-to-cart" data-product-id="13">
+                                <i class="fas fa-cart-plus"></i> Add to Cart
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="col-md-6">
+                <div class="product-card-kerala h-100">
+                    <img src="https://images.unsplash.com/photo-1594736797933-d0401ba2fe65?w=400&h=300&fit=crop&auto=format&q=80" 
+                         class="card-img-top" alt="Royal Velvet Lehenga" style="height: 250px; object-fit: cover;">
+                    <div class="card-body">
+                        <h5 class="card-title">Royal Velvet Bridal Lehenga</h5>
+                        <p class="card-text">Stunning velvet lehenga with Kerala motifs and sequin work</p>
+                        <div class="d-flex justify-content-between align-items-center">
+                            <div class="price">₹55,999 <small class="text-muted text-decoration-line-through">₹65,999</small></div>
+                            <button class="btn btn-kerala btn-sm add-to-cart" data-product-id="14">
+                                <i class="fas fa-cart-plus"></i> Add to Cart
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <div class="text-center mt-5">
+            <a href="{% url 'store:product_list' %}" class="cta-button cta-primary">
+                <i class="fas fa-star me-2"></i>View Complete Kerala Collection
+            </a>
+        </div>
+    </div>
+</section>
+
 <!-- Newsletter Section -->
 <section class="newsletter-section">
     <div class="container">

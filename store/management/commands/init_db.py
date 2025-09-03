@@ -31,6 +31,13 @@ class Command(BaseCommand):
             except Exception as e:
                 self.stdout.write(self.style.WARNING(f'⚠️ Product images: {str(e)}'))
             
+            # Add Kerala wedding products
+            try:
+                call_command('add_kerala_products')
+                self.stdout.write(self.style.SUCCESS('✅ Kerala wedding products added'))
+            except Exception as e:
+                self.stdout.write(self.style.WARNING(f'⚠️ Kerala products: {str(e)}'))
+            
             self.stdout.write(self.style.SUCCESS('🎉 Database initialization completed!'))
             
         except Exception as e:
