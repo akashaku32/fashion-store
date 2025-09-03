@@ -1,0 +1,144 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}Order Confirmation - Elegance Boutique{% endblock %}
+
+{% block content %}
+<div class="container py-5">
+    <div class="row justify-content-center">
+        <div class="col-lg-8">
+            <div class="order-success-card bg-white rounded-4 shadow-lg p-5 text-center">
+                <div class="success-icon mb-4">
+                    <i class="fas fa-check-circle fa-5x text-success"></i>
+                </div>
+                
+                <h1 class="display-5 fw-bold text-success mb-3">Order Confirmed!</h1>
+                <p class="lead text-muted mb-4">
+                    Thank you for your purchase! Your order has been successfully placed and is being processed.
+                </p>
+                
+                <div class="order-details bg-light rounded-4 p-4 mb-4">
+                    <h5 class="fw-bold mb-3">Order Details</h5>
+                    <div class="row g-3">
+                        <div class="col-md-6">
+                            <div class="detail-item">
+                                <span class="fw-bold">Order Number:</span>
+                                <span class="ms-2">{{ order.order_number }}</span>
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="detail-item">
+                                <span class="fw-bold">Order Date:</span>
+                                <span class="ms-2">{{ order.created_at|date:"M d, Y" }}</span>
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="detail-item">
+                                <span class="fw-bold">Total Amount:</span>
+                                <span class="ms-2 fw-bold text-primary">${{ order.total_amount }}</span>
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="detail-item">
+                                <span class="fw-bold">Status:</span>
+                                <span class="ms-2 badge bg-warning">{{ order.get_status_display }}</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="order-items mb-4">
+                    <h5 class="fw-bold mb-3">Items Ordered</h5>
+                    <div class="row g-3">
+                        {% for item in order.items.all %}
+                        <div class="col-md-6">
+                            <div class="item-card bg-white border rounded-3 p-3">
+                                <div class="d-flex align-items-center">
+                                    {% if item.product.images.first %}
+                                    <img src="{{ item.product.images.first.image_source }}" alt="{{ item.product.name }}" class="img-fluid rounded me-3" style="width: 60px; height: 60px; object-fit: cover;">
+                                    {% else %}
+                                    <div class="product-placeholder bg-light rounded me-3 d-flex align-items-center justify-content-center" style="width: 60px; height: 60px;">
+                                        <i class="fas fa-image text-muted"></i>
+                                    </div>
+                                    {% endif %}
+                                    <div>
+                                        <h6 class="fw-bold mb-1">{{ item.product.name }}</h6>
+                                        <small class="text-muted">{{ item.product.color }} - {{ item.product.size }}</small>
+                                        <div class="fw-bold text-primary">${{ item.total_price }}</div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        {% endfor %}
+                    </div>
+                </div>
+                
+                <div class="shipping-info bg-light rounded-4 p-4 mb-4">
+                    <h5 class="fw-bold mb-3">Shipping Information</h5>
+                    <div class="row g-3">
+                        <div class="col-md-6">
+                            <div class="detail-item">
+                                <span class="fw-bold">Name:</span>
+                                <span class="ms-2">{{ order.shipping_address.first_name }} {{ order.shipping_address.last_name }}</span>
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="detail-item">
+                                <span class="fw-bold">Phone:</span>
+                                <span class="ms-2">{{ order.shipping_address.phone }}</span>
+                            </div>
+                        </div>
+                        <div class="col-12">
+                            <div class="detail-item">
+                                <span class="fw-bold">Address:</span>
+                                <span class="ms-2">
+                                    {{ order.shipping_address.address_line_1 }}<br>
+                                    {% if order.shipping_address.address_line_2 %}{{ order.shipping_address.address_line_2 }}<br>{% endif %}
+                                    {{ order.shipping_address.city }}, {{ order.shipping_address.state }} {{ order.shipping_address.postal_code }}<br>
+                                    {{ order.shipping_address.country }}
+                                </span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="next-steps mb-4">
+                    <h5 class="fw-bold mb-3">What's Next?</h5>
+                    <div class="row g-3">
+                        <div class="col-md-4">
+                            <div class="step-item">
+                                <i class="fas fa-envelope fa-2x text-primary mb-2"></i>
+                                <h6 class="fw-bold">Confirmation Email</h6>
+                                <p class="text-muted small">You'll receive an order confirmation email shortly.</p>
+                            </div>
+                        </div>
+                        <div class="col-md-4">
+                            <div class="step-item">
+                                <i class="fas fa-box fa-2x text-primary mb-2"></i>
+                                <h6 class="fw-bold">Processing</h6>
+                                <p class="text-muted small">We'll prepare your order for shipment.</p>
+                            </div>
+                        </div>
+                        <div class="col-md-4">
+                            <div class="step-item">
+                                <i class="fas fa-shipping-fast fa-2x text-primary mb-2"></i>
+                                <h6 class="fw-bold">Shipping</h6>
+                                <p class="text-muted small">Your order will be shipped within 1-2 business days.</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="action-buttons">
+                    <a href="{% url 'store:order_detail' order.id %}" class="btn btn-primary btn-lg me-3">
+                        <i class="fas fa-eye me-2"></i>View Order Details
+                    </a>
+                    <a href="{% url 'store:product_list' %}" class="btn btn-outline-primary btn-lg">
+                        <i class="fas fa-shopping-bag me-2"></i>Continue Shopping
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

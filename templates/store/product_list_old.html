@@ -1,0 +1,282 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}Shop - Luna & Lace{% endblock %}
+
+{% block content %}
+<div class="container py-5">
+    <div class="row">
+        <!-- Sidebar -->
+        <div class="col-lg-3 mb-4">
+            <div class="sidebar elegant-card soft-rounded p-4">
+                <h5 class="fw-bold mb-4">Filters</h5>
+                
+                <!-- Search -->
+                <div class="mb-4">
+                    <h6 class="fw-bold mb-3">Search</h6>
+                    <form method="get" class="d-flex">
+                        <input type="text" name="search" class="form-control me-2" placeholder="Search products..." value="{{ search_query }}">
+                        <button type="submit" class="btn btn-primary">
+                            <i class="fas fa-search"></i>
+                        </button>
+                    </form>
+                </div>
+                
+                <!-- Categories -->
+                <div class="mb-4">
+                    <h6 class="fw-bold mb-3">Categories</h6>
+                    <div class="list-group list-group-flush">
+                        <a href="{% url 'store:product_list' %}" class="list-group-item list-group-item-action border-0 px-0 {% if not current_category %}active{% endif %}">
+                            All Categories
+                        </a>
+                        {% for category in categories %}
+                        <a href="{% url 'store:product_list' %}?category={{ category.slug }}" class="list-group-item list-group-item-action border-0 px-0 {% if current_category == category.slug %}active{% endif %}">
+                            {{ category.name }}
+                        </a>
+                        {% endfor %}
+                    </div>
+                </div>
+                
+                <!-- Price Range -->
+                <div class="mb-4">
+                    <h6 class="fw-bold mb-3">Price Range</h6>
+                    <form method="get" id="price-filter">
+                        <div class="row g-2">
+                            <div class="col-6">
+                                <input type="number" name="min_price" class="form-control form-control-sm" placeholder="Min" value="{{ min_price }}">
+                            </div>
+                            <div class="col-6">
+                                <input type="number" name="max_price" class="form-control form-control-sm" placeholder="Max" value="{{ max_price }}">
+                            </div>
+                        </div>
+                        <button type="submit" class="btn btn-outline-primary btn-sm mt-2 w-100">Apply</button>
+                    </form>
+                </div>
+                
+                <!-- Size -->
+                <div class="mb-4">
+                    <h6 class="fw-bold mb-3">Size</h6>
+                    <div class="btn-group-vertical w-100" role="group">
+                        {% for size_choice in product.size.field.choices %}
+                        <input type="radio" class="btn-check" name="size" id="size_{{ size_choice.0 }}" value="{{ size_choice.0 }}" {% if size == size_choice.0 %}checked{% endif %}>
+                        <label class="btn btn-outline-primary btn-sm" for="size_{{ size_choice.0 }}">{{ size_choice.1 }}</label>
+                        {% endfor %}
+                    </div>
+                </div>
+                
+                <!-- Color -->
+                <div class="mb-4">
+                    <h6 class="fw-bold mb-3">Color</h6>
+                    <div class="row g-2">
+                        {% for color_choice in product.color.field.choices %}
+                        <div class="col-6">
+                            <input type="radio" class="btn-check" name="color" id="color_{{ color_choice.0 }}" value="{{ color_choice.0 }}" {% if color == color_choice.0 %}checked{% endif %}>
+                            <label class="btn btn-outline-primary btn-sm w-100" for="color_{{ color_choice.0 }}">{{ color_choice.1 }}</label>
+                        </div>
+                        {% endfor %}
+                    </div>
+                </div>
+                
+                <!-- Clear Filters -->
+                <a href="{% url 'store:product_list' %}" class="btn btn-outline-secondary btn-sm w-100">
+                    Clear All Filters
+                </a>
+            </div>
+        </div>
+        
+        <!-- Products -->
+        <div class="col-lg-9">
+            <!-- Header -->
+            <div class="d-flex justify-content-between align-items-center mb-4">
+                <div>
+                    <h2 class="fw-bold mb-1">Products</h2>
+                    <p class="text-muted mb-0">{{ products.paginator.count }} products found</p>
+                </div>
+                <div class="d-flex align-items-center">
+                    <label class="me-2">Sort by:</label>
+                    <select class="form-select" id="sort-select" style="width: auto;">
+                        <option value="newest" {% if sort_by == 'newest' %}selected{% endif %}>Newest</option>
+                        <option value="price_low" {% if sort_by == 'price_low' %}selected{% endif %}>Price: Low to High</option>
+                        <option value="price_high" {% if sort_by == 'price_high' %}selected{% endif %}>Price: High to Low</option>
+                        <option value="name" {% if sort_by == 'name' %}selected{% endif %}>Name: A to Z</option>
+                    </select>
+                </div>
+            </div>
+            
+            <!-- Products Grid -->
+            <div class="row g-4">
+                {% for product in products %}
+                <div class="col-lg-4 col-md-6">
+                    <div class="product-card luxury-product-card overflow-hidden h-100">
+                        <div class="product-image position-relative">
+                            {% if product.images.first %}
+                            <img src="{{ product.images.first.image_source }}" alt="{{ product.name }}" class="img-fluid">
+                            {% else %}
+                            <div class="product-placeholder bg-light d-flex align-items-center justify-content-center">
+                                <i class="fas fa-image fa-3x text-muted"></i>
+                            </div>
+                            {% endif %}
+                            {% if product.discount_price %}
+                            <div class="discount-badge">
+                                -{{ product.discount_percentage }}%
+                            </div>
+                            {% endif %}
+                            <div class="product-actions">
+                                <a href="{% url 'store:product_detail' product.slug %}" class="btn btn-primary btn-sm">
+                                    <i class="fas fa-eye"></i>
+                                </a>
+                                <button class="btn btn-outline-primary btn-sm add-to-cart" data-product-id="{{ product.id }}">
+                                    <i class="fas fa-shopping-cart"></i>
+                                </button>
+                            </div>
+                        </div>
+                        <div class="product-content p-4">
+                            <h6 class="product-title fw-bold mb-2">{{ product.name }}</h6>
+                            <div class="product-price mb-3">
+                                {% if product.discount_price %}
+                                <span class="current-price fw-bold text-primary">${{ product.discount_price }}</span>
+                                <span class="original-price text-muted text-decoration-line-through ms-2">${{ product.price }}</span>
+                                {% else %}
+                                <span class="current-price fw-bold text-primary">${{ product.price }}</span>
+                                {% endif %}
+                            </div>
+                            <div class="product-meta text-muted small">
+                                <span class="me-3"><i class="fas fa-palette me-1"></i>{{ product.color }}</span>
+                                <span><i class="fas fa-ruler me-1"></i>{{ product.size }}</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                {% empty %}
+                <div class="col-12">
+                    <div class="text-center py-5">
+                        <i class="fas fa-search fa-4x text-muted mb-3"></i>
+                        <h4 class="text-muted">No products found</h4>
+                        <p class="text-muted">Try adjusting your filters or search terms.</p>
+                        <a href="{% url 'store:product_list' %}" class="btn btn-primary">View All Products</a>
+                    </div>
+                </div>
+                {% endfor %}
+            </div>
+            
+            <!-- Pagination -->
+            {% if products.has_other_pages %}
+            <nav aria-label="Products pagination" class="mt-5">
+                <ul class="pagination justify-content-center">
+                    {% if products.has_previous %}
+                    <li class="page-item">
+                        <a class="page-link" href="?page={{ products.previous_page_number }}{% if request.GET.category %}&category={{ request.GET.category }}{% endif %}{% if request.GET.search %}&search={{ request.GET.search }}{% endif %}{% if request.GET.sort %}&sort={{ request.GET.sort }}{% endif %}">Previous</a>
+                    </li>
+                    {% endif %}
+                    
+                    {% for num in products.paginator.page_range %}
+                    {% if products.number == num %}
+                    <li class="page-item active">
+                        <span class="page-link">{{ num }}</span>
+                    </li>
+                    {% elif num > products.number|add:'-3' and num < products.number|add:'3' %}
+                    <li class="page-item">
+                        <a class="page-link" href="?page={{ num }}{% if request.GET.category %}&category={{ request.GET.category }}{% endif %}{% if request.GET.search %}&search={{ request.GET.search }}{% endif %}{% if request.GET.sort %}&sort={{ request.GET.sort }}{% endif %}">{{ num }}</a>
+                    </li>
+                    {% endif %}
+                    {% endfor %}
+                    
+                    {% if products.has_next %}
+                    <li class="page-item">
+                        <a class="page-link" href="?page={{ products.next_page_number }}{% if request.GET.category %}&category={{ request.GET.category }}{% endif %}{% if request.GET.search %}&search={{ request.GET.search }}{% endif %}{% if request.GET.sort %}&sort={{ request.GET.sort }}{% endif %}">Next</a>
+                    </li>
+                    {% endif %}
+                </ul>
+            </nav>
+            {% endif %}
+        </div>
+    </div>
+</div>
+{% endblock %}
+
+{% block extra_js %}
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+    // Sort functionality
+    document.getElementById('sort-select').addEventListener('change', function() {
+        const url = new URL(window.location);
+        url.searchParams.set('sort', this.value);
+        window.location.href = url.toString();
+    });
+    
+    // Filter form submissions
+    document.getElementById('price-filter').addEventListener('submit', function(e) {
+        e.preventDefault();
+        const formData = new FormData(this);
+        const url = new URL(window.location);
+        
+        for (let [key, value] of formData.entries()) {
+            if (value) {
+                url.searchParams.set(key, value);
+            } else {
+                url.searchParams.delete(key);
+            }
+        }
+        
+        window.location.href = url.toString();
+    });
+    
+    // Size and color filters
+    document.querySelectorAll('input[name="size"], input[name="color"]').forEach(input => {
+        input.addEventListener('change', function() {
+            const url = new URL(window.location);
+            if (this.checked) {
+                url.searchParams.set(this.name, this.value);
+            } else {
+                url.searchParams.delete(this.name);
+            }
+            window.location.href = url.toString();
+        });
+    });
+    
+    // Add to cart functionality
+    document.querySelectorAll('.add-to-cart').forEach(button => {
+        button.addEventListener('click', function() {
+            const productId = this.dataset.productId;
+            fetch(`/add-to-cart/${productId}/`, {
+                method: 'POST',
+                headers: {
+                    'X-CSRFToken': document.querySelector('[name=csrfmiddlewaretoken]').value,
+                    'X-Requested-With': 'XMLHttpRequest',
+                    'Content-Type': 'application/x-www-form-urlencoded',
+                },
+                body: 'quantity=1'
+            })
+            .then(response => response.json())
+            .then(data => {
+                if (data.success) {
+                    const cartBadge = document.querySelector('.badge');
+                    if (cartBadge) {
+                        cartBadge.textContent = data.cart_items_count;
+                    }
+                    showNotification('Product added to cart!', 'success');
+                }
+            })
+            .catch(error => {
+                showNotification('Error adding product to cart', 'error');
+            });
+        });
+    });
+});
+
+function showNotification(message, type) {
+    const notification = document.createElement('div');
+    notification.className = `alert alert-${type === 'success' ? 'success' : 'danger'} alert-dismissible fade show position-fixed`;
+    notification.style.cssText = 'top: 100px; right: 20px; z-index: 9999; min-width: 300px;';
+    notification.innerHTML = `
+        ${message}
+        <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+    `;
+    document.body.appendChild(notification);
+    
+    setTimeout(() => {
+        notification.remove();
+    }, 3000);
+}
+</script>
+{% endblock %}

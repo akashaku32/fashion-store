@@ -1,0 +1,204 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}Shopping Cart - Luna & Lace{% endblock %}
+
+{% block extra_css %}
+<style>
+.cart-hero {
+    background: linear-gradient(135deg, rgba(255, 255, 255, 0.6) 0%, rgba(248, 249, 250, 0.6) 100%), 
+                url('https://images.unsplash.com/photo-1556742049-0cfed4f6a45d?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1920&h=1080&q=80') center/cover;
+    padding: 3rem 0;
+    position: relative;
+}
+
+.cart-hero::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: rgba(255, 255, 255, 0.1);
+    backdrop-filter: blur(10px);
+}
+</style>
+{% endblock %}
+
+{% block content %}
+<div class="cart-hero">
+    <div class="container">
+        <div class="text-center">
+            <h1 class="display-4 fw-bold text-white mb-3" style="text-shadow: 2px 2px 8px rgba(0, 0, 0, 0.7), 0 0 20px rgba(0, 0, 0, 0.5); filter: drop-shadow(0 4px 8px rgba(0, 0, 0, 0.6));">Shopping Cart</h1>
+            <p class="lead text-white" style="text-shadow: 1px 1px 6px rgba(0, 0, 0, 0.8), 0 0 15px rgba(0, 0, 0, 0.6); filter: drop-shadow(0 2px 4px rgba(0, 0, 0, 0.7));">Review your selected items</p>
+        </div>
+    </div>
+</div>
+
+<div class="container py-5">
+    <div class="row">
+        <div class="col-12">
+            <h2 class="fw-bold mb-4">Shopping Cart</h2>
+            
+            {% if cart_items %}
+            <div class="row">
+                <div class="col-lg-8">
+                    <div class="cart-items">
+                        {% for item in cart_items %}
+                        <div class="cart-item bg-white rounded-4 shadow-sm p-4 mb-3">
+                            <div class="row align-items-center">
+                                <div class="col-md-2">
+                                    <div class="cart-item-image">
+                                        {% if item.product.images.first %}
+                                        <img src="{{ item.product.images.first.image_source }}" alt="{{ item.product.name }}" class="img-fluid rounded">
+                                        {% else %}
+                                        <div class="product-placeholder bg-light d-flex align-items-center justify-content-center rounded">
+                                            <i class="fas fa-image text-muted"></i>
+                                        </div>
+                                        {% endif %}
+                                    </div>
+                                </div>
+                                <div class="col-md-4">
+                                    <div class="cart-item-details">
+                                        <h6 class="fw-bold mb-1">{{ item.product.name }}</h6>
+                                        <p class="text-muted small mb-1">{{ item.product.category.name }}</p>
+                                        <div class="product-meta text-muted small">
+                                            <span class="me-3"><i class="fas fa-palette me-1"></i>{{ item.product.color }}</span>
+                                            <span><i class="fas fa-ruler me-1"></i>{{ item.product.size }}</span>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-md-2">
+                                    <div class="quantity-controls">
+                                        <form method="post" action="{% url 'store:update_cart_item' item.id %}" class="d-flex align-items-center">
+                                            {% csrf_token %}
+                                            <button type="button" class="btn btn-outline-secondary btn-sm" onclick="decreaseQuantity({{ item.id }})">-</button>
+                                            <input type="number" name="quantity" value="{{ item.quantity }}" min="1" max="{{ item.product.stock_quantity }}" class="form-control form-control-sm text-center mx-2" style="width: 60px;" id="quantity-{{ item.id }}">
+                                            <button type="button" class="btn btn-outline-secondary btn-sm" onclick="increaseQuantity({{ item.id }})">+</button>
+                                        </form>
+                                    </div>
+                                </div>
+                                <div class="col-md-2">
+                                    <div class="cart-item-price text-center">
+                                        <span class="fw-bold">${{ item.total_price }}</span>
+                                        <div class="text-muted small">${{ item.product.final_price }} each</div>
+                                    </div>
+                                </div>
+                                <div class="col-md-2">
+                                    <div class="cart-item-actions text-end">
+                                        <form method="post" action="{% url 'store:remove_from_cart' item.id %}" class="d-inline">
+                                            {% csrf_token %}
+                                            <button type="submit" class="btn btn-outline-danger btn-sm" onclick="return confirm('Are you sure you want to remove this item?')">
+                                                <i class="fas fa-trash"></i>
+                                            </button>
+                                        </form>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        {% endfor %}
+                    </div>
+                </div>
+                
+                <div class="col-lg-4">
+                    <div class="cart-summary bg-white rounded-4 shadow-sm p-4">
+                        <h5 class="fw-bold mb-4">Order Summary</h5>
+                        
+                        <div class="summary-item d-flex justify-content-between mb-2">
+                            <span>Subtotal:</span>
+                            <span>${{ cart.total_price }}</span>
+                        </div>
+                        <div class="summary-item d-flex justify-content-between mb-2">
+                            <span>Shipping:</span>
+                            <span>${{ cart.shipping_cost|floatformat:2 }}</span>
+                        </div>
+                        <div class="summary-item d-flex justify-content-between mb-2">
+                            <span>Tax:</span>
+                            <span>${{ cart.tax_amount|floatformat:2 }}</span>
+                        </div>
+                        <hr>
+                        <div class="summary-item d-flex justify-content-between mb-4">
+                            <span class="fw-bold">Total:</span>
+                            <span class="fw-bold">${{ cart.grand_total|floatformat:2 }}</span>
+                        </div>
+                        
+                        <div class="d-grid gap-2">
+                            <a href="{% url 'store:checkout' %}" class="btn btn-primary btn-lg">
+                                <i class="fas fa-credit-card me-2"></i>Proceed to Checkout
+                            </a>
+                            <a href="{% url 'store:product_list' %}" class="btn btn-outline-primary">
+                                <i class="fas fa-arrow-left me-2"></i>Continue Shopping
+                            </a>
+                        </div>
+                        
+                        <div class="mt-4">
+                            <h6 class="fw-bold mb-3">We Accept</h6>
+                            <div class="payment-methods">
+                                <i class="fab fa-cc-visa fa-2x text-primary me-2"></i>
+                                <i class="fab fa-cc-mastercard fa-2x text-primary me-2"></i>
+                                <i class="fab fa-cc-amex fa-2x text-primary me-2"></i>
+                                <i class="fab fa-cc-paypal fa-2x text-primary"></i>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            {% else %}
+            <div class="empty-cart text-center py-5">
+                <i class="fas fa-shopping-cart fa-4x text-muted mb-4"></i>
+                <h4 class="text-muted mb-3">Your cart is empty</h4>
+                <p class="text-muted mb-4">Looks like you haven't added any items to your cart yet.</p>
+                <a href="{% url 'store:product_list' %}" class="btn btn-primary btn-lg">
+                    <i class="fas fa-shopping-bag me-2"></i>Start Shopping
+                </a>
+            </div>
+            {% endif %}
+        </div>
+    </div>
+</div>
+{% endblock %}
+
+{% block extra_js %}
+<script>
+function increaseQuantity(itemId) {
+    const input = document.getElementById(`quantity-${itemId}`);
+    const max = parseInt(input.getAttribute('max'));
+    const current = parseInt(input.value);
+    if (current < max) {
+        input.value = current + 1;
+        updateCartItem(itemId, input.value);
+    }
+}
+
+function decreaseQuantity(itemId) {
+    const input = document.getElementById(`quantity-${itemId}`);
+    const current = parseInt(input.value);
+    if (current > 1) {
+        input.value = current - 1;
+        updateCartItem(itemId, input.value);
+    }
+}
+
+function updateCartItem(itemId, quantity) {
+    fetch(`/update-cart-item/${itemId}/`, {
+        method: 'POST',
+        headers: {
+            'X-CSRFToken': document.querySelector('[name=csrfmiddlewaretoken]').value,
+            'X-Requested-With': 'XMLHttpRequest',
+            'Content-Type': 'application/x-www-form-urlencoded',
+        },
+        body: `quantity=${quantity}`
+    })
+    .then(response => response.json())
+    .then(data => {
+        if (data.success) {
+            // Reload the page to update totals
+            window.location.reload();
+        }
+    })
+    .catch(error => {
+        console.error('Error updating cart item:', error);
+    });
+}
+</script>
+{% endblock %}

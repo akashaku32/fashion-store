@@ -1,0 +1,16 @@
+runtime: python39
+
+env_variables:
+  DJANGO_SETTINGS_MODULE: ladies_clothing.settings
+
+handlers:
+- url: /static
+  static_dir: staticfiles
+- url: /media
+  static_dir: media
+- url: /.*
+  script: auto
+
+automatic_scaling:
+  min_instances: 1
+  max_instances: 10

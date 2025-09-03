@@ -1,0 +1,226 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}About Us - Luna & Lace{% endblock %}
+
+{% block extra_css %}
+<style>
+.about-hero {
+    background: linear-gradient(135deg, rgba(255, 107, 157, 0.7) 0%, rgba(196, 69, 105, 0.7) 100%), 
+                url('https://images.unsplash.com/photo-1556905055-8f358a7a47b2?w=1920&h=1080&fit=crop&auto=format&q=80') center/cover;
+    padding: 4rem 0;
+    position: relative;
+}
+
+.about-hero::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: rgba(0, 0, 0, 0.2);
+    backdrop-filter: blur(5px);
+}
+
+.hero-title {
+    font-family: 'Playfair Display', Georgia, serif;
+    font-size: 4rem;
+    font-weight: 700;
+    font-style: italic;
+    color: #ffffff;
+    margin-bottom: 1.5rem;
+    letter-spacing: 0.02em;
+    line-height: 1.2;
+    text-shadow: 2px 2px 8px rgba(0, 0, 0, 0.7), 0 0 20px rgba(0, 0, 0, 0.5);
+    filter: drop-shadow(0 4px 8px rgba(0, 0, 0, 0.6));
+}
+
+.hero-subtitle {
+    font-family: 'Cormorant Garamond', Georgia, serif;
+    font-size: 1.4rem;
+    font-style: italic;
+    color: #ffffff;
+    margin-bottom: 2.5rem;
+    font-weight: 500;
+    line-height: 1.6;
+    text-shadow: 1px 1px 6px rgba(0, 0, 0, 0.8), 0 0 15px rgba(0, 0, 0, 0.6);
+    filter: drop-shadow(0 2px 4px rgba(0, 0, 0, 0.7));
+}
+</style>
+{% endblock %}
+
+{% block content %}
+<!-- Hero Section -->
+<section class="about-hero text-white">
+    <div class="container">
+        <div class="row align-items-center">
+            <div class="col-lg-6">
+                <h1 class="hero-title">About Luna & Lace</h1>
+                <p class="hero-subtitle">We believe that every woman deserves to feel confident, beautiful, and empowered through fashion that reflects her unique style and personality.</p>
+            </div>
+            <div class="col-lg-6 text-center">
+                <i class="fas fa-crown fa-10x opacity-75"></i>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Our Story -->
+<section class="py-5">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-8 mx-auto text-center">
+                <h2 class="display-5 fw-bold mb-4">Our Story</h2>
+                <p class="lead text-muted mb-5">
+                    Founded in 2020, Elegance Boutique began as a small dream to create a fashion destination where quality meets style, and every piece tells a story. We started with a simple mission: to curate a collection of premium ladies' clothing that empowers women to express their individuality.
+                </p>
+                <p class="text-muted">
+                    Today, we've grown into a trusted name in women's fashion, offering carefully selected pieces from both established designers and emerging talents. Our commitment to quality, sustainability, and customer satisfaction has made us a favorite among fashion-conscious women worldwide.
+                </p>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Our Values -->
+<section class="py-5 bg-light">
+    <div class="container">
+        <div class="row mb-5">
+            <div class="col-12 text-center">
+                <h2 class="display-5 fw-bold mb-3">Our Values</h2>
+                <p class="lead text-muted">What drives us every day</p>
+            </div>
+        </div>
+        <div class="row g-4">
+            <div class="col-lg-4 col-md-6">
+                <div class="value-card text-center p-4">
+                    <div class="value-icon mb-3">
+                        <i class="fas fa-gem fa-3x text-primary"></i>
+                    </div>
+                    <h5 class="fw-bold mb-3">Quality First</h5>
+                    <p class="text-muted">We carefully select each piece to ensure exceptional quality, durability, and timeless appeal.</p>
+                </div>
+            </div>
+            <div class="col-lg-4 col-md-6">
+                <div class="value-card text-center p-4">
+                    <div class="value-icon mb-3">
+                        <i class="fas fa-leaf fa-3x text-primary"></i>
+                    </div>
+                    <h5 class="fw-bold mb-3">Sustainability</h5>
+                    <p class="text-muted">We're committed to sustainable fashion practices and supporting eco-friendly brands.</p>
+                </div>
+            </div>
+            <div class="col-lg-4 col-md-6">
+                <div class="value-card text-center p-4">
+                    <div class="value-icon mb-3">
+                        <i class="fas fa-heart fa-3x text-primary"></i>
+                    </div>
+                    <h5 class="fw-bold mb-3">Empowerment</h5>
+                    <p class="text-muted">We believe fashion should empower women to feel confident and express their unique style.</p>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Team Section -->
+<section class="py-5">
+    <div class="container">
+        <div class="row mb-5">
+            <div class="col-12 text-center">
+                <h2 class="display-5 fw-bold mb-3">Meet Our Team</h2>
+                <p class="lead text-muted">The passionate people behind Elegance Boutique</p>
+            </div>
+        </div>
+        <div class="row g-4">
+            <div class="col-lg-4 col-md-6">
+                <div class="team-card text-center">
+                    <div class="team-image mb-3">
+                        <div class="team-placeholder bg-gradient-primary rounded-circle mx-auto d-flex align-items-center justify-content-center">
+                            <i class="fas fa-user fa-3x text-white"></i>
+                        </div>
+                    </div>
+                    <h5 class="fw-bold mb-1">Sarah Johnson</h5>
+                    <p class="text-primary mb-2">Founder & CEO</p>
+                    <p class="text-muted small">With over 10 years in fashion, Sarah leads our vision of empowering women through style.</p>
+                </div>
+            </div>
+            <div class="col-lg-4 col-md-6">
+                <div class="team-card text-center">
+                    <div class="team-image mb-3">
+                        <div class="team-placeholder bg-gradient-primary rounded-circle mx-auto d-flex align-items-center justify-content-center">
+                            <i class="fas fa-user fa-3x text-white"></i>
+                        </div>
+                    </div>
+                    <h5 class="fw-bold mb-1">Emily Chen</h5>
+                    <p class="text-primary mb-2">Creative Director</p>
+                    <p class="text-muted small">Emily brings fresh perspectives and innovative designs to our collection.</p>
+                </div>
+            </div>
+            <div class="col-lg-4 col-md-6">
+                <div class="team-card text-center">
+                    <div class="team-image mb-3">
+                        <div class="team-placeholder bg-gradient-primary rounded-circle mx-auto d-flex align-items-center justify-content-center">
+                            <i class="fas fa-user fa-3x text-white"></i>
+                        </div>
+                    </div>
+                    <h5 class="fw-bold mb-1">Maria Rodriguez</h5>
+                    <p class="text-primary mb-2">Customer Experience</p>
+                    <p class="text-muted small">Maria ensures every customer has an exceptional shopping experience with us.</p>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Statistics -->
+<section class="py-5 bg-primary text-white">
+    <div class="container">
+        <div class="row g-4 text-center">
+            <div class="col-lg-3 col-md-6">
+                <div class="stat-item">
+                    <h3 class="display-4 fw-bold mb-2">10K+</h3>
+                    <p class="mb-0">Happy Customers</p>
+                </div>
+            </div>
+            <div class="col-lg-3 col-md-6">
+                <div class="stat-item">
+                    <h3 class="display-4 fw-bold mb-2">500+</h3>
+                    <p class="mb-0">Products</p>
+                </div>
+            </div>
+            <div class="col-lg-3 col-md-6">
+                <div class="stat-item">
+                    <h3 class="display-4 fw-bold mb-2">50+</h3>
+                    <p class="mb-0">Designers</p>
+                </div>
+            </div>
+            <div class="col-lg-3 col-md-6">
+                <div class="stat-item">
+                    <h3 class="display-4 fw-bold mb-2">4.9</h3>
+                    <p class="mb-0">Customer Rating</p>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Contact CTA -->
+<section class="py-5">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-8 mx-auto text-center">
+                <h2 class="display-5 fw-bold mb-4">Get in Touch</h2>
+                <p class="lead text-muted mb-4">
+                    Have questions about our products or need styling advice? We'd love to hear from you!
+                </p>
+                <a href="{% url 'store:contact' %}" class="btn btn-primary btn-lg px-5">
+                    <i class="fas fa-envelope me-2"></i>Contact Us
+                </a>
+            </div>
+        </div>
+    </div>
+</section>
+{% endblock %}
+

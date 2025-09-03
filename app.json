@@ -1,0 +1,31 @@
+{
+  "name": "Ladies Clothing Store",
+  "description": "A modern Django e-commerce application for ladies' clothing",
+  "image": "heroku/python",
+  "repository": "https://github.com/yourusername/ladies-clothing-store",
+  "keywords": ["python", "django", "ecommerce", "fashion", "clothing"],
+  "addons": ["heroku-postgresql:mini"],
+  "env": {
+    "SECRET_KEY": {
+      "description": "A secret key for verifying the integrity of signed cookies.",
+      "generator": "secret"
+    },
+    "DEBUG": {
+      "description": "Debug mode",
+      "value": "False"
+    }
+  },
+  "formation": {
+    "web": {
+      "quantity": 1
+    }
+  },
+  "buildpacks": [
+    {
+      "url": "heroku/python"
+    }
+  ],
+  "scripts": {
+    "postdeploy": "python manage.py migrate && python manage.py collectstatic --noinput"
+  }
+}
