@@ -525,17 +525,17 @@
 </div>
 
 <!-- Hero Section -->
-<section class="hero-section">
+<section class="hero-section mobile-section">
     <div class="container">
-        <div class="hero-content">
+        <div class="hero-content hero-text">
             <h1 class="hero-title">Discover Your Perfect Style</h1>
             <p class="hero-subtitle">Curated collection of modern, comfortable, and stylish women's fashion that celebrates your individuality</p>
             <div class="hero-cta">
-                <a href="{% url 'store:product_list' %}" class="cta-button cta-primary">
-                    Shop Now
+                <a href="{% url 'store:product_list' %}" class="cta-button cta-primary ripple">
+                    <i class="fas fa-shopping-bag me-2"></i>Shop Now
                 </a>
-                <a href="{% url 'store:product_list' %}?category=dresses" class="cta-button cta-secondary">
-                    View Dresses
+                <a href="{% url 'store:product_list' %}?category=dresses" class="cta-button cta-secondary ripple">
+                    <i class="fas fa-heart me-2"></i>View Dresses
                 </a>
             </div>
         </div>
@@ -572,16 +572,16 @@
 </section>
 
 <!-- Featured Products Section -->
-<section class="featured-section">
+<section class="featured-section mobile-section">
     <div class="container">
-        <div class="section-title">
-            <h2>Everyone's Eyeing These</h2>
+        <div class="section-title text-overlay">
+            <h2 class="feminine-title">Everyone's Eyeing These</h2>
             <p>Handpicked favorites from our latest collection</p>
         </div>
         
         <div class="featured-grid">
             {% for product in featured_products %}
-            <div class="featured-product-card">
+            <div class="featured-product-card ripple">
                 <div class="product-image-container">
                     {% if product.images.first %}
                     <img src="{{ product.images.first.image_source }}" alt="{{ product.name }}" class="product-image">
