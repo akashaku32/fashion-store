@@ -344,10 +344,10 @@
                     
                     <div class="product-price">
                         {% if product.discount_price %}
-                        ${{ product.discount_price }}
-                        <span class="discount-price">${{ product.price }}</span>
+                        ₹{{ product.discount_price }}
+                        <span class="discount-price">₹{{ product.price }}</span>
                         {% else %}
-                        ${{ product.price }}
+                        ₹{{ product.price }}
                         {% endif %}
                     </div>
                     
@@ -395,7 +395,7 @@
                             <div>
                                 <strong>Free Shipping</strong>
                                 <br>
-                                <small class="text-muted">On orders over $100</small>
+                                <small class="text-muted">On orders over ₹7,999</small>
                             </div>
                         </div>
                         
