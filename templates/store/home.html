@@ -7,11 +7,28 @@
 <style>
 /* Uptownie-inspired Homepage Styles */
 .hero-section {
-    background: linear-gradient(135deg, rgba(255, 245, 248, 0.6) 0%, rgba(250, 249, 247, 0.6) 100%), 
+    background: linear-gradient(135deg, rgba(255, 245, 248, 0.4) 0%, rgba(250, 249, 247, 0.4) 100%), 
                 url('https://images.unsplash.com/photo-1556905055-8f358a7a47b2?w=1920&h=1080&fit=crop&auto=format&q=80') center/cover;
     padding: 6rem 0 4rem;
     position: relative;
     overflow: hidden;
+    min-height: 70vh;
+    display: flex;
+    align-items: center;
+}
+
+@media (max-width: 768px) {
+    .hero-section {
+        padding: 4rem 0 3rem;
+        min-height: 60vh;
+    }
+}
+
+@media (max-width: 480px) {
+    .hero-section {
+        padding: 3rem 0 2rem;
+        min-height: 50vh;
+    }
 }
 
 .hero-content {
@@ -23,14 +40,31 @@
 .hero-title {
     font-family: 'Playfair Display', Georgia, serif;
     font-size: 4rem;
-    font-weight: 700;
+    font-weight: 800;
     font-style: italic;
     color: #ffffff;
     margin-bottom: 1.5rem;
     letter-spacing: 0.02em;
     line-height: 1.2;
-    text-shadow: 2px 2px 8px rgba(0, 0, 0, 0.7), 0 0 20px rgba(0, 0, 0, 0.5);
-    filter: drop-shadow(0 4px 8px rgba(0, 0, 0, 0.6));
+    text-shadow: 3px 3px 12px rgba(0, 0, 0, 0.9), 
+                 0 0 25px rgba(0, 0, 0, 0.7),
+                 0 0 40px rgba(0, 0, 0, 0.4);
+    filter: drop-shadow(0 6px 12px rgba(0, 0, 0, 0.8));
+}
+
+@media (max-width: 768px) {
+    .hero-title {
+        font-size: 2.5rem;
+        margin-bottom: 1rem;
+    }
+}
+
+@media (max-width: 480px) {
+    .hero-title {
+        font-size: 2rem;
+        margin-bottom: 0.75rem;
+        line-height: 1.1;
+    }
 }
 
 .hero-subtitle {
@@ -41,8 +75,25 @@
     margin-bottom: 2.5rem;
     font-weight: 500;
     line-height: 1.6;
-    text-shadow: 1px 1px 6px rgba(0, 0, 0, 0.8), 0 0 15px rgba(0, 0, 0, 0.6);
-    filter: drop-shadow(0 2px 4px rgba(0, 0, 0, 0.7));
+    text-shadow: 2px 2px 8px rgba(0, 0, 0, 0.9), 
+                 0 0 20px rgba(0, 0, 0, 0.7),
+                 0 0 30px rgba(0, 0, 0, 0.4);
+    filter: drop-shadow(0 4px 8px rgba(0, 0, 0, 0.8));
+}
+
+@media (max-width: 768px) {
+    .hero-subtitle {
+        font-size: 1.2rem;
+        margin-bottom: 2rem;
+    }
+}
+
+@media (max-width: 480px) {
+    .hero-subtitle {
+        font-size: 1rem;
+        margin-bottom: 1.5rem;
+        line-height: 1.4;
+    }
 }
 
 .hero-cta {
@@ -50,6 +101,21 @@
     gap: 1rem;
     justify-content: center;
     flex-wrap: wrap;
+}
+
+@media (max-width: 480px) {
+    .hero-cta {
+        flex-direction: column;
+        align-items: center;
+        gap: 0.75rem;
+    }
+    
+    .hero-cta .btn {
+        width: 100%;
+        max-width: 250px;
+        padding: 1rem 2rem;
+        font-size: 1rem;
+    }
 }
 
 .cta-button {
