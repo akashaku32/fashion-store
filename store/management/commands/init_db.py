@@ -38,6 +38,13 @@ class Command(BaseCommand):
             except Exception as e:
                 self.stdout.write(self.style.WARNING(f'⚠️ Kerala products: {str(e)}'))
             
+            # Add diverse cultural fashion
+            try:
+                call_command('add_diverse_fashion')
+                self.stdout.write(self.style.SUCCESS('✅ Diverse cultural fashion added'))
+            except Exception as e:
+                self.stdout.write(self.style.WARNING(f'⚠️ Diverse fashion: {str(e)}'))
+            
             self.stdout.write(self.style.SUCCESS('🎉 Database initialization completed!'))
             
         except Exception as e:

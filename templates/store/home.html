@@ -7,14 +7,42 @@
 <style>
 /* Uptownie-inspired Homepage Styles */
 .hero-section {
-    background: linear-gradient(135deg, rgba(255, 245, 248, 0.4) 0%, rgba(250, 249, 247, 0.4) 100%), 
-                url('https://images.unsplash.com/photo-1556905055-8f358a7a47b2?w=1920&h=1080&fit=crop&auto=format&q=80') center/cover;
+    background: 
+        linear-gradient(135deg, rgba(255, 215, 0, 0.1) 0%, rgba(220, 53, 69, 0.1) 50%, rgba(156, 39, 176, 0.1) 100%), 
+        linear-gradient(45deg, rgba(255, 255, 255, 0.1) 0%, rgba(248, 249, 250, 0.2) 100%),
+        url('https://images.unsplash.com/photo-1583391733956-6c78276477e1?w=1920&h=1080&fit=crop&auto=format&q=80') center/cover;
+    background-attachment: fixed;
     padding: 6rem 0 4rem;
     position: relative;
     overflow: hidden;
-    min-height: 70vh;
+    min-height: 80vh;
     display: flex;
     align-items: center;
+}
+
+.hero-section::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: 
+        url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><path d="M50 5L60 35L90 35L70 55L80 85L50 65L20 85L30 55L10 35L40 35Z" fill="%23ffd70020"/></svg>') repeat,
+        radial-gradient(circle at 20% 20%, rgba(255, 215, 0, 0.1) 0%, transparent 50%),
+        radial-gradient(circle at 80% 80%, rgba(220, 53, 69, 0.1) 0%, transparent 50%);
+    background-size: 50px 50px, 300px 300px, 300px 300px;
+    animation: floatingPattern 20s linear infinite;
+    opacity: 0.3;
+    z-index: 1;
+}
+
+@keyframes floatingPattern {
+    0% { transform: translateX(0) translateY(0); }
+    25% { transform: translateX(20px) translateY(-10px); }
+    50% { transform: translateX(-10px) translateY(-20px); }
+    75% { transform: translateX(-20px) translateY(10px); }
+    100% { transform: translateX(0) translateY(0); }
 }
 
 @media (max-width: 768px) {
@@ -260,9 +288,38 @@
 /* Featured Products Section */
 .featured-section {
     padding: 4rem 0;
-    background: linear-gradient(135deg, rgba(248, 249, 250, 0.6) 0%, rgba(255, 255, 255, 0.6) 100%), 
-                url('https://images.unsplash.com/photo-1445205170230-053b83016050?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1920&h=1080&q=80') center/cover;
+    background: 
+        linear-gradient(135deg, rgba(255, 215, 0, 0.1) 0%, rgba(76, 175, 80, 0.1) 25%, rgba(233, 30, 99, 0.1) 50%, rgba(63, 81, 181, 0.1) 75%, rgba(255, 152, 0, 0.1) 100%),
+        url('https://images.unsplash.com/photo-1583391733956-6c78276477e1?w=1920&h=1080&fit=crop&auto=format&q=80') center/cover;
+    background-attachment: fixed;
     position: relative;
+    overflow: hidden;
+}
+
+.featured-section::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: 
+        url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><circle cx="20" cy="20" r="2" fill="%23ffd70030"/><circle cx="80" cy="30" r="3" fill="%234caf5030"/><circle cx="60" cy="70" r="2" fill="%23e91e6330"/><circle cx="30" cy="80" r="3" fill="%233f51b530"/></svg>') repeat,
+        radial-gradient(circle at 10% 20%, rgba(255, 215, 0, 0.1) 0%, transparent 30%),
+        radial-gradient(circle at 90% 80%, rgba(76, 175, 80, 0.1) 0%, transparent 30%),
+        radial-gradient(circle at 50% 50%, rgba(233, 30, 99, 0.1) 0%, transparent 30%);
+    background-size: 80px 80px, 400px 400px, 400px 400px, 400px 400px;
+    animation: culturalPattern 25s linear infinite;
+    opacity: 0.4;
+    z-index: 1;
+}
+
+@keyframes culturalPattern {
+    0% { transform: translateX(0) translateY(0) rotate(0deg); }
+    25% { transform: translateX(30px) translateY(-20px) rotate(90deg); }
+    50% { transform: translateX(-20px) translateY(-30px) rotate(180deg); }
+    75% { transform: translateX(-30px) translateY(20px) rotate(270deg); }
+    100% { transform: translateX(0) translateY(0) rotate(360deg); }
 }
 
 .featured-grid {
@@ -735,6 +792,148 @@
         </div>
     </div>
 </section>
+
+<!-- Diverse Cultural Fashion Section -->
+<section class="cultural-fashion-section mobile-section" style="
+    background: 
+        linear-gradient(45deg, rgba(255, 193, 7, 0.1) 0%, rgba(156, 39, 176, 0.1) 25%, rgba(76, 175, 80, 0.1) 50%, rgba(244, 67, 54, 0.1) 75%, rgba(33, 150, 243, 0.1) 100%),
+        url('https://images.unsplash.com/photo-1594736797933-d0401ba2fe65?w=1920&h=1080&fit=crop&auto=format&q=80') center/cover;
+    background-attachment: fixed;
+    padding: 5rem 0;
+    position: relative;
+    overflow: hidden;
+">
+    <div style="
+        position: absolute;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        background: 
+            url('data:image/svg+xml,<svg xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 200 200\"><path d=\"M100 20l15 30h35l-25 20 10 30-35-25-35 25 10-30-25-20h35z\" fill=\"%23ff572230\" opacity=\"0.3\"/><circle cx=\"50\" cy=\"150\" r=\"8\" fill=\"%234caf5030\" opacity=\"0.4\"/><circle cx=\"150\" cy=\"150\" r=\"6\" fill=\"%23ffc10730\" opacity=\"0.4\"/></svg>') repeat,
+            radial-gradient(circle at 25% 25%, rgba(255, 193, 7, 0.1) 0%, transparent 40%),
+            radial-gradient(circle at 75% 75%, rgba(156, 39, 176, 0.1) 0%, transparent 40%);
+        background-size: 150px 150px, 500px 500px, 500px 500px;
+        animation: culturalDance 30s ease-in-out infinite;
+        opacity: 0.6;
+        z-index: 1;
+    "></div>
+    
+    <div class="container text-center" style="position: relative; z-index: 2;">
+        <div class="text-overlay mb-5">
+            <h2 class="feminine-title mb-4" style="color: white; font-size: 3rem;">Beautiful Styles for Every Culture</h2>
+            <p class="mb-5" style="color: rgba(255, 255, 255, 0.95); font-size: 1.3rem;">From elegant abayas to traditional Indian wear, from fusion styles to party glamour - celebrate diversity in fashion</p>
+        </div>
+        
+        <div class="row g-4 mb-5">
+            <!-- Modest Wear -->
+            <div class="col-md-6 col-lg-3">
+                <div class="category-card kerala-bridal h-100">
+                    <img src="https://images.unsplash.com/photo-1583391733956-6c78276477e1?w=400&h=250&fit=crop&auto=format&q=80" 
+                         class="card-img-top" alt="Modest Wear" style="height: 180px; object-fit: cover;">
+                    <div class="card-body">
+                        <h6 class="card-title">Modest & Elegant</h6>
+                        <p class="card-text small">Beautiful abayas, kaftans & modest dresses</p>
+                        <a href="{% url 'store:product_list' %}?category=elegant-abayas-and-modest-wear" class="btn btn-kerala btn-sm">
+                            <i class="fas fa-moon me-1"></i>Shop
+                        </a>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Traditional Indian -->
+            <div class="col-md-6 col-lg-3">
+                <div class="category-card kerala-wedding h-100">
+                    <img src="https://images.unsplash.com/photo-1594736797933-d0401ba2fe65?w=400&h=250&fit=crop&auto=format&q=80" 
+                         class="card-img-top" alt="Traditional Indian" style="height: 180px; object-fit: cover;">
+                    <div class="card-body">
+                        <h6 class="card-title">Traditional Indian</h6>
+                        <p class="card-text small">Salwar kameez, churidars & ethnic wear</p>
+                        <a href="{% url 'store:product_list' %}?category=traditional-indian-wear" class="btn btn-kerala btn-sm">
+                            <i class="fas fa-star me-1"></i>Explore
+                        </a>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Fusion Fashion -->
+            <div class="col-md-6 col-lg-3">
+                <div class="category-card kerala-festive h-100">
+                    <img src="https://images.unsplash.com/photo-1617038220319-276d3cfab638?w=400&h=250&fit=crop&auto=format&q=80" 
+                         class="card-img-top" alt="Fusion Wear" style="height: 180px; object-fit: cover;">
+                    <div class="card-body">
+                        <h6 class="card-title">Fusion & Modern</h6>
+                        <p class="card-text small">Contemporary styles with cultural touch</p>
+                        <a href="{% url 'store:product_list' %}?category=fusion-and-contemporary" class="btn btn-kerala btn-sm">
+                            <i class="fas fa-magic me-1"></i>Browse
+                        </a>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Party Wear -->
+            <div class="col-md-6 col-lg-3">
+                <div class="category-card kerala-bridal h-100">
+                    <img src="https://images.unsplash.com/photo-1515562141207-7a88fb7ce338?w=400&h=250&fit=crop&auto=format&q=80" 
+                         class="card-img-top" alt="Party Wear" style="height: 180px; object-fit: cover;">
+                    <div class="card-body">
+                        <h6 class="card-title">Party & Festive</h6>
+                        <p class="card-text small">Glamorous outfits for celebrations</p>
+                        <a href="{% url 'store:product_list' %}?category=party-and-festive-wear" class="btn btn-kerala btn-sm">
+                            <i class="fas fa-cocktail me-1"></i>Shop
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <div class="text-center">
+            <a href="{% url 'store:product_list' %}" class="cta-button cta-primary" style="
+                background: linear-gradient(135deg, #ff6b9d, #c44569, #ffd700);
+                padding: 1rem 2.5rem;
+                border-radius: 50px;
+                color: white;
+                font-weight: 600;
+                text-decoration: none;
+                box-shadow: 0 8px 30px rgba(255, 107, 157, 0.3);
+                transition: all 0.3s ease;
+            ">
+                <i class="fas fa-heart me-2"></i>Discover All Cultural Styles
+            </a>
+        </div>
+    </div>
+</section>
+
+<style>
+@keyframes culturalDance {
+    0%, 100% { 
+        transform: translateX(0) translateY(0) rotate(0deg);
+        opacity: 0.6;
+    }
+    25% { 
+        transform: translateX(20px) translateY(-15px) rotate(5deg);
+        opacity: 0.8;
+    }
+    50% { 
+        transform: translateX(-15px) translateY(-25px) rotate(-3deg);
+        opacity: 0.7;
+    }
+    75% { 
+        transform: translateX(-20px) translateY(15px) rotate(7deg);
+        opacity: 0.9;
+    }
+}
+
+.cultural-fashion-section .category-card {
+    transform: translateY(0);
+    transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.cultural-fashion-section .category-card:hover {
+    transform: translateY(-15px) scale(1.05);
+    box-shadow: 0 25px 50px rgba(0, 0, 0, 0.2);
+}
+</style>
 
 <!-- Newsletter Section -->
 <section class="newsletter-section">
