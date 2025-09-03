@@ -271,6 +271,67 @@ class Review(models.Model):
         return f"{self.customer.user.username} - {self.product.name} ({self.rating} stars)"
 
 
+class SeasonalGallery(models.Model):
+    SEASON_CHOICES = [
+        ('spring', 'Spring Festival'),
+        ('summer', 'Summer Collection'),
+        ('monsoon', 'Monsoon Special'),
+        ('autumn', 'Autumn Fashion'),
+        ('winter', 'Winter Collection'),
+        ('onam', 'Onam Festival'),
+        ('vishu', 'Vishu Celebration'),
+        ('wedding', 'Wedding Season'),
+        ('diwali', 'Diwali Collection'),
+        ('pongal', 'Pongal Festival'),
+    ]
+
+    STYLE_CHOICES = [
+        ('kerala_traditional', 'Kerala Traditional'),
+        ('kerala_modern', 'Kerala Modern Fusion'),
+        ('kerala_bridal', 'Kerala Bridal'),
+        ('south_indian', 'South Indian'),
+        ('north_indian', 'North Indian'),
+        ('indo_western', 'Indo Western'),
+    ]
+
+    title = models.CharField(max_length=200)
+    season = models.CharField(max_length=20, choices=SEASON_CHOICES)
+    style = models.CharField(max_length=20, choices=STYLE_CHOICES)
+    description = models.TextField()
+    image = models.ImageField(upload_to='gallery/seasonal/', blank=True, null=True)
+    image_url = models.URLField(blank=True, null=True, help_text="External image URL")
+    start_date = models.DateField()
+    end_date = models.DateField()
+    is_active = models.BooleanField(default=True)
+    created_at = models.DateTimeField(auto_now_add=True)
+    updated_at = models.DateTimeField(auto_now=True)
+
+    class Meta:
+        verbose_name_plural = 'Seasonal Galleries'
+        ordering = ['-start_date', 'title']
+
+    def __str__(self):
+        return f"{self.get_season_display()} - {self.get_style_display()}"
+
+    @property
+    def image_source(self):
+        """Return either the uploaded image or the external URL"""
+        if self.image and hasattr(self.image, 'url'):
+            try:
+                return self.image.url
+            except ValueError:
+                pass
+        if self.image_url:
+            return self.image_url
+        return None
+
+    @property
+    def is_current(self):
+        """Check if this gallery is currently active based on date range"""
+        today = timezone.now().date()
+        return self.start_date <= today <= self.end_date
+
+
 class Newsletter(models.Model):
     email = models.EmailField(unique=True)
     is_active = models.BooleanField(default=True)

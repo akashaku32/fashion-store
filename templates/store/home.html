@@ -879,7 +879,27 @@
 <!-- Kerala Traditional Fashion Gallery -->
 <section class="kerala-fashion-gallery">
     <div class="gallery-slides">
-        <!-- Slide 1: Kerala Bridal Beauty -->
+        {% for gallery in seasonal_galleries %}
+        <div class="slide{% if forloop.first %} active{% endif %}" style="background-image: linear-gradient(135deg, rgba(0,0,0,0.4) 0%, rgba(0,0,0,0.2) 100%), url('{{ gallery.image_source }}');">
+            <img src="{{ gallery.image_source }}" alt="{{ gallery.title }}" loading="lazy">
+            <div class="slide-content">
+                <h2>{{ gallery.title }}</h2>
+                <p>{{ gallery.description }}</p>
+                <a href="{% url 'store:product_list' %}?category={{ gallery.style }}" class="btn btn-kerala btn-lg">
+                    {% if gallery.style == 'kerala_bridal' %}
+                        <i class="fas fa-sparkles me-2"></i>Explore Bridal Collection
+                    {% elif gallery.style == 'kerala_traditional' %}
+                        <i class="fas fa-star me-2"></i>View Traditional Collection
+                    {% elif gallery.style == 'kerala_modern' %}
+                        <i class="fas fa-magic me-2"></i>Discover Modern Fusion
+                    {% else %}
+                        <i class="fas fa-palette me-2"></i>Explore Collection
+                    {% endif %}
+                </a>
+            </div>
+        </div>
+        {% empty %}
+        <!-- Default slides if no seasonal galleries are active -->
         <div class="slide active" style="background-image: linear-gradient(135deg, rgba(0,0,0,0.4) 0%, rgba(0,0,0,0.2) 100%), url('https://images.unsplash.com/photo-1583391733956-6c78276477e1?w=1920&h=1080&fit=crop&auto=format&q=80');">
             <img src="https://images.unsplash.com/photo-1583391733956-6c78276477e1?w=1920&h=1080&fit=crop&auto=format&q=80" alt="Kerala Bridal Beauty" loading="lazy">
             <div class="slide-content">
@@ -890,42 +910,7 @@
                 </a>
             </div>
         </div>
-
-        <!-- Slide 2: Temple Jewelry -->
-        <div class="slide" style="background-image: linear-gradient(135deg, rgba(0,0,0,0.4) 0%, rgba(0,0,0,0.2) 100%), url('https://images.unsplash.com/photo-1515562141207-7a88fb7ce338?w=1920&h=1080&fit=crop&auto=format&q=80');">
-            <img src="https://images.unsplash.com/photo-1515562141207-7a88fb7ce338?w=1920&h=1080&fit=crop&auto=format&q=80" alt="Temple Jewelry" loading="lazy">
-            <div class="slide-content">
-                <h2>Sacred Temple Jewelry</h2>
-                <p>Authentic Kerala temple jewelry with intricate gold work and traditional craftsmanship</p>
-                <a href="{% url 'store:product_list' %}?category=kerala-traditional-jewelry" class="btn btn-kerala btn-lg">
-                    <i class="fas fa-gem me-2"></i>Discover Temple Jewelry
-                </a>
-            </div>
-        </div>
-
-        <!-- Slide 3: Wedding Lehengas -->
-        <div class="slide" style="background-image: linear-gradient(135deg, rgba(0,0,0,0.4) 0%, rgba(0,0,0,0.2) 100%), url('https://images.unsplash.com/photo-1594736797933-d0401ba2fe65?w=1920&h=1080&fit=crop&auto=format&q=80');">
-            <img src="https://images.unsplash.com/photo-1594736797933-d0401ba2fe65?w=1920&h=1080&fit=crop&auto=format&q=80" alt="Wedding Lehengas" loading="lazy">
-            <div class="slide-content">
-                <h2>Royal Wedding Lehengas</h2>
-                <p>Stunning velvet lehengas with Kerala motifs and heavy embroidery for your special day</p>
-                <a href="{% url 'store:product_list' %}?category=wedding-lehengas" class="btn btn-kerala btn-lg">
-                    <i class="fas fa-crown me-2"></i>View Royal Collection
-                </a>
-            </div>
-        </div>
-
-        <!-- Slide 4: Cultural Diversity -->
-        <div class="slide" style="background-image: linear-gradient(135deg, rgba(0,0,0,0.4) 0%, rgba(0,0,0,0.2) 100%), url('https://images.unsplash.com/photo-1617038220319-276d3cfab638?w=1920&h=1080&fit=crop&auto=format&q=80');">
-            <img src="https://images.unsplash.com/photo-1617038220319-276d3cfab638?w=1920&h=1080&fit=crop&auto=format&q=80" alt="Cultural Diversity" loading="lazy">
-            <div class="slide-content">
-                <h2>Cultural Elegance</h2>
-                <p>Beautiful fusion of traditional Kerala style with modern contemporary fashion</p>
-                <a href="{% url 'store:product_list' %}" class="btn btn-kerala btn-lg">
-                    <i class="fas fa-palette me-2"></i>Explore All Collections
-                </a>
-            </div>
-        </div>
+        {% endfor %}
     </div>
 
     <!-- Navigation Buttons -->
@@ -938,10 +923,11 @@
 
     <!-- Dots Indicator -->
     <div class="gallery-dots">
+        {% for gallery in seasonal_galleries %}
+        <span class="dot{% if forloop.first %} active{% endif %}" onclick="goToSlide({{ forloop.counter0 }})"></span>
+        {% empty %}
         <span class="dot active" onclick="goToSlide(0)"></span>
-        <span class="dot" onclick="goToSlide(1)"></span>
-        <span class="dot" onclick="goToSlide(2)"></span>
-        <span class="dot" onclick="goToSlide(3)"></span>
+        {% endfor %}
     </div>
 </section>
 
