@@ -18,7 +18,7 @@ class Command(BaseCommand):
                 'season': 'onam',
                 'style': 'kerala_traditional',
                 'description': 'Stunning Kerala kasavu sarees and traditional settu mundu collections for Onam celebration. Features elegant cream and gold combinations with intricate temple borders.',
-                'image_url': 'https://images.unsplash.com/photo-1583391733956-6c78276477e1',
+                'image_url': 'https://images.unsplash.com/photo-1594736797933-d0401ba2fe65?w=1920&h=1080&fit=crop&auto=format&q=100',
                 'start_date': f'{current_year}-08-20',
                 'end_date': f'{current_year}-09-05'
             },
@@ -28,7 +28,7 @@ class Command(BaseCommand):
                 'season': 'wedding',
                 'style': 'kerala_bridal',
                 'description': 'Exquisite bridal collections featuring traditional Kerala wedding sarees, heavily embellished with zari work and temple designs. Perfect for the wedding season.',
-                'image_url': 'https://images.unsplash.com/photo-1595981267035-7f04d35b3a8e',
+                'image_url': 'https://images.unsplash.com/photo-1583391733956-6c78276477e1?w=1920&h=1080&fit=crop&auto=format&q=100',
                 'start_date': f'{current_year}-11-01',
                 'end_date': f'{current_year}-12-31'
             },
@@ -38,7 +38,7 @@ class Command(BaseCommand):
                 'season': 'vishu',
                 'style': 'kerala_traditional',
                 'description': 'Welcome the Malayalam New Year with our radiant Vishu collection. Traditional Kerala sarees and settu mundu with contemporary touches.',
-                'image_url': 'https://images.unsplash.com/photo-1583396060233-3d13c9d7b172',
+                'image_url': 'https://images.unsplash.com/photo-1617038220319-276d3cfab638?w=1920&h=1080&fit=crop&auto=format&q=100',
                 'start_date': f'{current_year}-04-01',
                 'end_date': f'{current_year}-04-30'
             },
@@ -48,7 +48,7 @@ class Command(BaseCommand):
                 'season': 'monsoon',
                 'style': 'kerala_modern',
                 'description': 'Embrace the beauty of Kerala monsoon with our fusion collection. Modern interpretations of traditional designs perfect for the rainy season.',
-                'image_url': 'https://images.unsplash.com/photo-1583396059632-0033cf1a4c7b',
+                'image_url': 'https://images.unsplash.com/photo-1583396060233-3d13c9d7b172?w=1920&h=1080&fit=crop&auto=format&q=100',
                 'start_date': f'{current_year}-06-01',
                 'end_date': f'{current_year}-08-31'
             },
@@ -58,7 +58,7 @@ class Command(BaseCommand):
                 'season': 'summer',
                 'style': 'indo_western',
                 'description': 'Light and breezy Indo-western fusion wear perfect for summer. Featuring contemporary takes on traditional Kerala motifs.',
-                'image_url': 'https://images.unsplash.com/photo-1583395838144-09c70d2f7f3c',
+                'image_url': 'https://images.unsplash.com/photo-1515562141207-7a88fb7ce338?w=1920&h=1080&fit=crop&auto=format&q=100',
                 'start_date': f'{current_year}-03-01',
                 'end_date': f'{current_year}-05-31'
             },
@@ -68,7 +68,7 @@ class Command(BaseCommand):
                 'season': 'diwali',
                 'style': 'south_indian',
                 'description': 'Celebrate Diwali in style with our festive collection featuring rich silk sarees and contemporary ethnic wear with traditional motifs.',
-                'image_url': 'https://images.unsplash.com/photo-1583395838429-7176593ccf22',
+                'image_url': 'https://images.unsplash.com/photo-1583395838144-09c70d2f7f3c?w=1920&h=1080&fit=crop&auto=format&q=100',
                 'start_date': f'{current_year}-10-15',
                 'end_date': f'{current_year}-11-15'
             }

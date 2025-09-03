@@ -100,26 +100,27 @@
                     </div>
                 </div>
                 
+                {% if cart %}
                 <div class="col-lg-4">
                     <div class="cart-summary bg-white rounded-4 shadow-sm p-4">
                         <h5 class="fw-bold mb-4">Order Summary</h5>
                         
                         <div class="summary-item d-flex justify-content-between mb-2">
                             <span>Subtotal:</span>
-                            <span>${{ cart.total_price }}</span>
+                            <span>₹{{ cart.total_price }}</span>
                         </div>
                         <div class="summary-item d-flex justify-content-between mb-2">
                             <span>Shipping:</span>
-                            <span>${{ cart.shipping_cost|floatformat:2 }}</span>
+                            <span>₹{{ cart.shipping_cost|floatformat:2 }}</span>
                         </div>
                         <div class="summary-item d-flex justify-content-between mb-2">
                             <span>Tax:</span>
-                            <span>${{ cart.tax_amount|floatformat:2 }}</span>
+                            <span>₹{{ cart.tax_amount|floatformat:2 }}</span>
                         </div>
                         <hr>
                         <div class="summary-item d-flex justify-content-between mb-4">
                             <span class="fw-bold">Total:</span>
-                            <span class="fw-bold">${{ cart.grand_total|floatformat:2 }}</span>
+                            <span class="fw-bold">₹{{ cart.grand_total|floatformat:2 }}</span>
                         </div>
                         
                         <div class="d-grid gap-2">
@@ -142,6 +143,7 @@
                         </div>
                     </div>
                 </div>
+                {% endif %}
             </div>
             {% else %}
             <div class="empty-cart text-center py-5">

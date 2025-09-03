@@ -39,7 +39,8 @@ def logout_view(request):
 @login_required
 def profile(request):
     """User profile page"""
-    customer = request.user.customer
+    # Get or create customer profile
+    customer, created = Customer.objects.get_or_create(user=request.user)
     addresses = Address.objects.filter(customer=customer)
     
     if request.method == 'POST':
@@ -69,7 +70,9 @@ def add_address(request):
         form = AddressForm(request.POST)
         if form.is_valid():
             address = form.save(commit=False)
-            address.customer = request.user.customer
+            # Get or create customer profile
+            customer, created = Customer.objects.get_or_create(user=request.user)
+            address.customer = customer
             address.save()
             messages.success(request, 'Address added successfully!')
             return redirect('accounts:profile')
@@ -82,7 +85,9 @@ def add_address(request):
 @login_required
 def edit_address(request, address_id):
     """Edit address"""
-    address = Address.objects.get(id=address_id, customer=request.user.customer)
+    # Get or create customer profile
+    customer, created = Customer.objects.get_or_create(user=request.user)
+    address = Address.objects.get(id=address_id, customer=customer)
     
     if request.method == 'POST':
         form = AddressForm(request.POST, instance=address)
@@ -99,7 +104,9 @@ def edit_address(request, address_id):
 @login_required
 def delete_address(request, address_id):
     """Delete address"""
-    address = Address.objects.get(id=address_id, customer=request.user.customer)
+    # Get or create customer profile
+    customer, created = Customer.objects.get_or_create(user=request.user)
+    address = Address.objects.get(id=address_id, customer=customer)
     address.delete()
     messages.success(request, 'Address deleted successfully!')
     return redirect('accounts:profile')

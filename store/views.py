@@ -3,7 +3,7 @@ from django.http import JsonResponse
 from django.utils import timezone
 from django.core.paginator import Paginator
 from django.views.decorators.http import require_POST
-from .models import Category, Product, SeasonalGallery, Cart, CartItem
+from .models import Category, Product, SeasonalGallery, Cart, CartItem, Customer, Order
 
 def home(request):
     # Get active categories
@@ -83,8 +83,13 @@ def add_to_cart(request, product_id):
     
     # Get or create cart
     if request.user.is_authenticated:
-        cart, created = Cart.objects.get_or_create(customer=request.user.customer)
+        # Get or create customer profile
+        customer, created = Customer.objects.get_or_create(user=request.user)
+        cart, created = Cart.objects.get_or_create(customer=customer)
     else:
+        # Ensure session key exists for anonymous users
+        if not request.session.session_key:
+            request.session.create()
         cart, created = Cart.objects.get_or_create(session_key=request.session.session_key)
     
     # Add item to cart
@@ -104,8 +109,13 @@ def remove_from_cart(request, product_id):
     
     # Get cart
     if request.user.is_authenticated:
-        cart = get_object_or_404(Cart, customer=request.user.customer)
+        # Get or create customer profile
+        customer, created = Customer.objects.get_or_create(user=request.user)
+        cart = get_object_or_404(Cart, customer=customer)
     else:
+        # Ensure session key exists for anonymous users
+        if not request.session.session_key:
+            request.session.create()
         cart = get_object_or_404(Cart, session_key=request.session.session_key)
     
     # Remove item from cart
@@ -120,6 +130,91 @@ def remove_from_cart(request, product_id):
         'success': success,
         'cart_items_count': cart.total_items
     })
+
+def cart_view(request):
+    # Get cart
+    if request.user.is_authenticated:
+        # Get or create customer profile
+        customer, created = Customer.objects.get_or_create(user=request.user)
+        cart = Cart.objects.filter(customer=customer).first()
+    else:
+        # Ensure session key exists for anonymous users
+        if not request.session.session_key:
+            request.session.create()
+        cart = Cart.objects.filter(session_key=request.session.session_key).first()
+    
+    # Get cart items if cart exists
+    cart_items = []
+    if cart:
+        cart_items = cart.items.all()
+    
+    context = {
+        'cart': cart,
+        'cart_items': cart_items,
+    }
+    
+    return render(request, 'store/cart.html', context)
+
+def checkout(request):
+    # Get cart
+    if request.user.is_authenticated:
+        # Get or create customer profile
+        customer, created = Customer.objects.get_or_create(user=request.user)
+        cart = Cart.objects.filter(customer=customer).first()
+    else:
+        # Ensure session key exists for anonymous users
+        if not request.session.session_key:
+            request.session.create()
+        cart = Cart.objects.filter(session_key=request.session.session_key).first()
+    
+    # Get cart items if cart exists
+    cart_items = []
+    if cart:
+        cart_items = cart.items.all()
+    
+    context = {
+        'cart': cart,
+        'cart_items': cart_items,
+    }
+    
+    return render(request, 'store/checkout.html', context)
+
+def order_success(request, order_id):
+    return render(request, 'store/order_success.html', {'order_id': order_id})
+
+def order_history(request):
+    if request.user.is_authenticated:
+        # Get or create customer profile
+        customer, created = Customer.objects.get_or_create(user=request.user)
+        orders = Order.objects.filter(customer=customer).order_by('-created_at')
+    else:
+        orders = []
+    
+    context = {
+        'orders': orders,
+    }
+    
+    return render(request, 'store/order_history.html', context)
+
+def order_detail(request, order_id):
+    if request.user.is_authenticated:
+        # Get or create customer profile
+        customer, created = Customer.objects.get_or_create(user=request.user)
+        order = get_object_or_404(Order, id=order_id, customer=customer)
+    else:
+        order = None
+    
+    context = {
+        'order': order,
+    }
+    
+    return render(request, 'store/order_detail.html', context)
+
+def about(request):
+    return render(request, 'store/about.html')
+
+def contact(request):
+    return render(request, 'store/contact.html')
 
 def newsletter_signup(request):
     if request.method == 'POST':
