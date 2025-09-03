@@ -36,14 +36,21 @@ class Command(BaseCommand):
                 call_command('add_kerala_products')
                 self.stdout.write(self.style.SUCCESS('✅ Kerala wedding products added'))
             except Exception as e:
-                self.stdout.write(self.style.WARNING(f'⚠️ Kerala products: {str(e)}'))
+                self.stdout.write(self.style.WARNING('⚠️ Kerala products: {}'.format(str(e))))
             
             # Add diverse cultural fashion
             try:
                 call_command('add_diverse_fashion')
                 self.stdout.write(self.style.SUCCESS('✅ Diverse cultural fashion added'))
             except Exception as e:
-                self.stdout.write(self.style.WARNING(f'⚠️ Diverse fashion: {str(e)}'))
+                self.stdout.write(self.style.WARNING('⚠️ Diverse fashion: {}'.format(str(e))))
+
+            # Add comprehensive product images
+            try:
+                call_command('add_all_product_images')
+                self.stdout.write(self.style.SUCCESS('✅ Product images enhanced'))
+            except Exception as e:
+                self.stdout.write(self.style.WARNING('⚠️ Product images: {}'.format(str(e))))
             
             self.stdout.write(self.style.SUCCESS('🎉 Database initialization completed!'))
             
