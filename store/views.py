@@ -92,11 +92,15 @@ def add_to_cart(request, product_id):
             request.session.create()
         cart, created = Cart.objects.get_or_create(session_key=request.session.session_key)
     
-    # Add item to cart
-    cart_item, created = CartItem.objects.get_or_create(cart=cart, product=product)
-    if not created:
+    # Check if item already exists
+    try:
+        cart_item = CartItem.objects.get(cart=cart, product=product)
+        # Item exists, add to quantity
         cart_item.quantity += quantity
         cart_item.save()
+    except CartItem.DoesNotExist:
+        # Item doesn't exist, create new
+        cart_item = CartItem.objects.create(cart=cart, product=product, quantity=quantity)
     
     return JsonResponse({
         'success': True,
@@ -131,6 +135,38 @@ def remove_from_cart(request, product_id):
         'cart_items_count': cart.total_items
     })
 
+@require_POST
+def update_cart_item(request, item_id):
+    try:
+        cart_item = get_object_or_404(CartItem, id=item_id)
+        quantity = int(request.POST.get('quantity', 1))
+        
+        # Check if user has permission to update this cart item
+        if request.user.is_authenticated:
+            customer, created = Customer.objects.get_or_create(user=request.user)
+            if cart_item.cart.customer != customer:
+                return JsonResponse({'success': False, 'error': 'Permission denied'})
+        else:
+            if not request.session.session_key:
+                request.session.create()
+            if cart_item.cart.session_key != request.session.session_key:
+                return JsonResponse({'success': False, 'error': 'Permission denied'})
+        
+        # Update quantity
+        if quantity <= 0:
+            cart_item.delete()
+        else:
+            cart_item.quantity = quantity
+            cart_item.save()
+        
+        return JsonResponse({
+            'success': True,
+            'cart_items_count': cart_item.cart.total_items,
+            'item_total': cart_item.total_price
+        })
+    except Exception as e:
+        return JsonResponse({'success': False, 'error': str(e)})
+
 def cart_view(request):
     # Get cart
     if request.user.is_authenticated:
@@ -146,7 +182,7 @@ def cart_view(request):
     # Get cart items if cart exists
     cart_items = []
     if cart:
-        cart_items = cart.items.all()
+        cart_items = cart.cart_items.all()
     
     context = {
         'cart': cart,
@@ -170,7 +206,7 @@ def checkout(request):
     # Get cart items if cart exists
     cart_items = []
     if cart:
-        cart_items = cart.items.all()
+        cart_items = cart.cart_items.all()
     
     context = {
         'cart': cart,

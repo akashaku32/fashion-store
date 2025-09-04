@@ -164,11 +164,11 @@ class Cart(models.Model):
 
     @property
     def total_items(self):
-        return sum(item.quantity for item in self.items.all())
+        return sum(item.quantity for item in self.cart_items.all())
 
     @property
     def total_price(self):
-        return sum(item.total_price for item in self.items.all())
+        return sum(item.total_price for item in self.cart_items.all())
     
     @property
     def shipping_cost(self):
@@ -186,7 +186,7 @@ class Cart(models.Model):
 
 
 class CartItem(models.Model):
-    cart = models.ForeignKey(Cart, on_delete=models.CASCADE, related_name='items')
+    cart = models.ForeignKey(Cart, on_delete=models.CASCADE, related_name='cart_items')
     product = models.ForeignKey(Product, on_delete=models.CASCADE)
     quantity = models.PositiveIntegerField(default=1, validators=[MinValueValidator(1)])
     added_at = models.DateTimeField(auto_now_add=True)

@@ -22,6 +22,73 @@
     background: rgba(255, 255, 255, 0.1);
     backdrop-filter: blur(10px);
 }
+
+.cart-item {
+    transition: all 0.3s ease;
+    border: 1px solid #e9ecef;
+}
+
+.cart-item:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 8px 25px rgba(0, 0, 0, 0.1);
+}
+
+.cart-item-image img {
+    width: 80px;
+    height: 80px;
+    object-fit: cover;
+}
+
+.product-placeholder {
+    width: 80px;
+    height: 80px;
+    font-size: 24px;
+}
+
+.quantity-controls .btn {
+    width: 32px;
+    height: 32px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.cart-summary {
+    position: sticky;
+    top: 20px;
+}
+
+.summary-item {
+    font-size: 14px;
+}
+
+.payment-methods i {
+    margin-right: 10px;
+    opacity: 0.7;
+    transition: opacity 0.3s ease;
+}
+
+.payment-methods i:hover {
+    opacity: 1;
+}
+
+.empty-cart {
+    padding: 4rem 0;
+}
+
+@media (max-width: 768px) {
+    .cart-item .row {
+        text-align: center;
+    }
+    
+    .cart-item .col-md-2 {
+        margin-bottom: 10px;
+    }
+    
+    .quantity-controls {
+        justify-content: center;
+    }
+}
 </style>
 {% endblock %}
 
@@ -70,12 +137,11 @@
                                 </div>
                                 <div class="col-md-2">
                                     <div class="quantity-controls">
-                                        <form method="post" action="{% url 'store:update_cart_item' item.id %}" class="d-flex align-items-center">
-                                            {% csrf_token %}
-                                            <button type="button" class="btn btn-outline-secondary btn-sm" onclick="decreaseQuantity({{ item.id }})">-</button>
-                                            <input type="number" name="quantity" value="{{ item.quantity }}" min="1" max="{{ item.product.stock_quantity }}" class="form-control form-control-sm text-center mx-2" style="width: 60px;" id="quantity-{{ item.id }}">
-                                            <button type="button" class="btn btn-outline-secondary btn-sm" onclick="increaseQuantity({{ item.id }})">+</button>
-                                        </form>
+                                        <div class="d-flex align-items-center">
+                                            <button type="button" class="btn btn-outline-secondary btn-sm" onclick="decreaseQuantity('{{ item.id }}')">-</button>
+                                            <input type="number" value="{{ item.quantity }}" min="1" max="{{ item.product.stock_quantity }}" class="form-control form-control-sm text-center mx-2" style="width: 60px;" id="quantity-{{ item.id }}">
+                                            <button type="button" class="btn btn-outline-secondary btn-sm" onclick="increaseQuantity('{{ item.id }}')">+</button>
+                                        </div>
                                     </div>
                                 </div>
                                 <div class="col-md-2">
@@ -86,7 +152,7 @@
                                 </div>
                                 <div class="col-md-2">
                                     <div class="cart-item-actions text-end">
-                                        <form method="post" action="{% url 'store:remove_from_cart' item.id %}" class="d-inline">
+                                        <form method="post" action="{% url 'store:remove_from_cart' item.product.id %}" class="d-inline">
                                             {% csrf_token %}
                                             <button type="submit" class="btn btn-outline-danger btn-sm" onclick="return confirm('Are you sure you want to remove this item?')">
                                                 <i class="fas fa-trash"></i>
@@ -167,8 +233,9 @@ function increaseQuantity(itemId) {
     const max = parseInt(input.getAttribute('max'));
     const current = parseInt(input.value);
     if (current < max) {
-        input.value = current + 1;
-        updateCartItem(itemId, input.value);
+        const newQuantity = current + 1;
+        input.value = newQuantity;
+        updateCartItem(itemId, newQuantity);
     }
 }
 
@@ -176,30 +243,48 @@ function decreaseQuantity(itemId) {
     const input = document.getElementById(`quantity-${itemId}`);
     const current = parseInt(input.value);
     if (current > 1) {
-        input.value = current - 1;
-        updateCartItem(itemId, input.value);
+        const newQuantity = current - 1;
+        input.value = newQuantity;
+        updateCartItem(itemId, newQuantity);
     }
 }
 
 function updateCartItem(itemId, quantity) {
+    // Show loading state
+    const input = document.getElementById(`quantity-${itemId}`);
+    input.disabled = true;
+    
+    // Create form data
+    const formData = new FormData();
+    formData.append('quantity', quantity);
+    formData.append('csrfmiddlewaretoken', document.querySelector('[name=csrfmiddlewaretoken]').value);
+    
+    // Send update request
     fetch(`/update-cart-item/${itemId}/`, {
         method: 'POST',
+        body: formData,
         headers: {
             'X-CSRFToken': document.querySelector('[name=csrfmiddlewaretoken]').value,
-            'X-Requested-With': 'XMLHttpRequest',
-            'Content-Type': 'application/x-www-form-urlencoded',
-        },
-        body: `quantity=${quantity}`
+        }
     })
     .then(response => response.json())
     .then(data => {
         if (data.success) {
-            // Reload the page to update totals
+            // Update the page to reflect changes
             window.location.reload();
+        } else {
+            console.error('Error updating cart item:', data.error);
+            // Revert the input value
+            input.value = input.value;
         }
     })
     .catch(error => {
         console.error('Error updating cart item:', error);
+        // Revert the input value
+        input.value = input.value;
+    })
+    .finally(() => {
+        input.disabled = false;
     });
 }
 </script>

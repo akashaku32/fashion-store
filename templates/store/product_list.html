@@ -564,6 +564,8 @@ document.addEventListener('DOMContentLoaded', function() {
     }
     
     // Add to cart functionality
+    let isAddingToCart = {}; // Track which products are being added
+    
     document.querySelectorAll('.add-to-cart').forEach(button => {
         button.addEventListener('click', function(e) {
             e.preventDefault();
@@ -573,6 +575,13 @@ document.addEventListener('DOMContentLoaded', function() {
                 console.error('Product ID not found');
                 return;
             }
+            
+            // Prevent double submission for the same product
+            if (isAddingToCart[productId]) {
+                return;
+            }
+            
+            isAddingToCart[productId] = true;
             
             // Show loading state
             const originalContent = this.innerHTML;
@@ -607,6 +616,7 @@ document.addEventListener('DOMContentLoaded', function() {
                         this.innerHTML = originalContent;
                         this.style.background = '';
                         this.disabled = false;
+                        isAddingToCart[productId] = false;
                     }, 2000);
                 } else {
                     throw new Error('Failed to add to cart');
@@ -623,6 +633,7 @@ document.addEventListener('DOMContentLoaded', function() {
                     this.innerHTML = originalContent;
                     this.style.background = '';
                     this.disabled = false;
+                    isAddingToCart[productId] = false;
                 }, 2000);
             });
         });

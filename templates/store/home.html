@@ -1450,6 +1450,7 @@ function handleSwipe() {
 {% endblock %}
 
 {% block extra_js %}
+{% csrf_token %}
 <script>
 document.addEventListener('DOMContentLoaded', function() {
     // Add to cart functionality

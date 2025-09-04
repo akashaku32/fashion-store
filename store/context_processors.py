@@ -24,7 +24,7 @@ def cart(request):
                 del request.session['cart_id']
 
     if cart:
-        cart_items = cart.items.all()
+        cart_items = cart.cart_items.all()
         cart_total = cart.total_price
         cart_items_count = cart.total_items
 
@@ -34,5 +34,6 @@ def cart(request):
         'cart_total': cart_total,
         'cart_items_count': cart_items_count,
     }
+
 
 

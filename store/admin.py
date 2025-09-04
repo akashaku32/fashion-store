@@ -132,3 +132,4 @@ class NewsletterAdmin(admin.ModelAdmin):
     list_editable = ['is_active']
 
 
+
